@@ -1,5 +1,7 @@
 ## xmutex
 
+<img src="./imgs/1.png" alt="x" />
+
 run
 ```sh
 go mod init xmutex
@@ -21,3 +23,4 @@ test race condition
 go run -race .
 go test -race .
 ```
+

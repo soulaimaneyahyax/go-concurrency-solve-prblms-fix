@@ -17,11 +17,11 @@ type Doc struct {
 
 // Update Title
 func (d *Doc) updateTitle(newTitle string, wg *sync.WaitGroup, mu *sync.Mutex) {
+	defer wg.Done()
+
 	mu.Lock()
 	d.Title = newTitle
 	mu.Unlock()
-
-	wg.Done()
 }
 
 // Update Subtitle
