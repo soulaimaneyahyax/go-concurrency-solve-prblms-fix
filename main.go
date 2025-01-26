@@ -10,44 +10,44 @@ var mu sync.Mutex
 
 type Doc struct {
 	Id       int32
-	Title    string
-	Subtitle string
-	Content  string
+	title    string
+	subtitle string
+	content  string
 }
 
-// Update Title
-func (d *Doc) updateTitle(newTitle string, wg *sync.WaitGroup, mu *sync.Mutex) {
+// Update title
+func (d *Doc) updateTitle(title string, wg *sync.WaitGroup, mu *sync.Mutex) {
 	defer wg.Done()
 
 	mu.Lock()
-	d.Title = newTitle
+	d.title = title
 	mu.Unlock()
 }
 
-// Update Subtitle
-func (d *Doc) updateSubtitle(newSubtitle string, wg *sync.WaitGroup, mu *sync.Mutex) {
-	mu.Lock()
-	d.Subtitle = newSubtitle
-	mu.Unlock()
+// Update subtitle
+func (d *Doc) updateSubtitle(subtitle string, wg *sync.WaitGroup, mu *sync.Mutex) {
+	defer wg.Done()
 
-	wg.Done()
+	mu.Lock()
+	d.subtitle = subtitle
+	mu.Unlock()
 }
 
-// Update Content
-func (d *Doc) updateContent(newContent string, wg *sync.WaitGroup, mu *sync.Mutex) {
-	mu.Lock()
-	d.Content = newContent
-	mu.Unlock()
+// Update content
+func (d *Doc) updateContent(content string, wg *sync.WaitGroup, mu *sync.Mutex) {
+	defer wg.Done()
 
-	wg.Done()
+	mu.Lock()
+	d.content = content
+	mu.Unlock()
 }
 
 func main() {
 	doc := Doc{
 		Id:       1200,
-		Title:    "Lorem ipsum dolor sit amet Title",
-		Subtitle: "Lorem ipsum dolor sit amet Subtitle",
-		Content:  "Lorem ipsum dolor sit amet Content",
+		title:    "Lorem ipsum dolor sit amet title",
+		subtitle: "Lorem ipsum dolor sit amet subtitle",
+		content:  "Lorem ipsum dolor sit amet content",
 	}
 
 	// Number of concurrent updates
@@ -58,14 +58,14 @@ func main() {
 	for i := 1; i <= numUpdates; i++ {
 		go doc.updateTitle("Eo tot soliditatem bonis utens impediri conducunt possunt. Fruitur amicos locatus provocatus suis paranda praeterea quis metus.", &wg, &mu)
 
-		go doc.updateSubtitle("Concederetur acri corrupti finiri facilius fastidium deseruisse recta. Perpetua verterunt simulent audita perferendis parentes audiebamus solido umquam. Contentiones accurate modus mortis verterunt arte dignissimos. Motus democritus te sequatur extremo proficiscuntur probatum.", &wg, &mu)
+		go doc.updateSubtitle("Concederetur acri corrupti finiri facilius fastidium deseruisse recta. Perpetua verterunt simulent audita perferendis parentes audiebamus solido umquam. contentiones accurate modus mortis verterunt arte dignissimos. Motus democritus te sequatur extremo proficiscuntur probatum.", &wg, &mu)
 
 		go doc.updateContent("Infinito fuisse doloribus nominant historiae modo consuetudine. Difficilem terminari cetero intellegere verbum fortitudo muniti significet copulationesque. Nullas disputatione comprobavit dixi pariatur spernat amet. Duo evolutio poterit nostri fuisset geometriaque probatus ex turpe. Imitarentur pecunias turma errem diuturnitatem progrediens corrupte. Voluptas verbum aspernari magnopere coniuncta primisque verear faciunt earumque. Amicis ficta putas solis scilicet argumentandum iusteque via. Delectari copiosae monstruosi vituperatoribus pertinaces gratiam existimare. Consequentium leniter t integre assidua iudicium malis. Contineret inscientia vituperatum vacillare ego collegisti faciendum conspectum debeo. Levitatibus possit animus partes primis dixeris depravata.", &wg, &mu)
 	}
 
 	wg.Wait()
 
-	fmt.Printf("Title: %s\n", doc.Title)
-	fmt.Printf("\nSubtitle: %s\n", doc.Subtitle)
-	fmt.Printf("\nContent: %s\n", doc.Content)
+	fmt.Printf("title: %s\n", doc.title)
+	fmt.Printf("\nsubtitle: %s\n", doc.subtitle)
+	fmt.Printf("\ncontent: %s\n", doc.content)
 }

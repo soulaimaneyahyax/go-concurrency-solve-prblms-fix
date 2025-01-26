@@ -23,4 +23,3 @@ test race condition
 go run -race .
 go test -race .
 ```
-
