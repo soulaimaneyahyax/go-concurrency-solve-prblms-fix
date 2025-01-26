@@ -10,7 +10,7 @@ var wg sync.WaitGroup
 var mu sync.Mutex
 
 var eatTimes = 3
-var eatDelay = 3 * time.Second
+var eatDelay = 5 * time.Second
 
 type Philosopher struct {
 	name      string
@@ -29,9 +29,25 @@ var philosophers = []Philosopher{
 func diningPrblm(p Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex) {
 	defer wg.Done()
 
-	forks[p.rightFork].Lock()
-	fmt.Println(p.name)
-	forks[p.rightFork].Unlock()
+	for i := 0; i < eatTimes; i++ {
+		if p.leftFork > p.rightFork {
+			forks[p.rightFork].Lock()
+			fmt.Printf("%s takes the right fork\n", p.name)
+			forks[p.leftFork].Lock()
+			fmt.Printf("%s takes the left fork\n", p.name)
+		} else {
+			forks[p.leftFork].Lock()
+			fmt.Printf("%s takes the left fork\n", p.name)
+			forks[p.rightFork].Lock()
+			fmt.Printf("%s takes the right fork\n", p.name)
+		}
+
+		fmt.Printf("%s eating\n", p.name)
+		time.Sleep(eatDelay)
+
+		forks[p.rightFork].Unlock()
+		forks[p.leftFork].Unlock()
+	}
 }
 
 func dine() {
