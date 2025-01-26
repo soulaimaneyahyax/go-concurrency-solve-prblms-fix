@@ -1,4 +1,6 @@
-# Pizza maker / PRBLM2
+# Producer-concumer Prblm2
+
+go-concurrency Producer-concumer prblm2 // make piza app
 
 run
 ```sh
