@@ -10,8 +10,19 @@ type Doc struct {
 	content  string
 }
 
+// Update title
 func updateTitle(ch chan string, title string) {
 	ch <- title
+}
+
+// Update subtitle
+func updateSubtitle(ch chan string, subtitle string) {
+	ch <- subtitle
+}
+
+// Update content
+func updateContent(ch chan string, content string) {
+	ch <- content
 }
 
 func main() {
@@ -27,6 +38,12 @@ func main() {
 	for i := 0; i < nbrConcurrentUpdates; i++ {
 		go updateTitle(ch, "xlorem-ipsum")
 		doc1.title = <-ch
+
+		go updateSubtitle(ch, "xlorem-ipsum-dolor-sit-amet")
+		doc1.subtitle = <-ch
+
+		go updateContent(ch, "xStudiis-malum-res-cyrenaicos-hortatore-sedentis-vituperatoribus-irridente.-Timorem-inhumanus-iucundum-apeirian-initia-nihil-improbis-ferentur-numquid.")
+		doc1.content = <-ch
 	}
 
 	close(ch)
